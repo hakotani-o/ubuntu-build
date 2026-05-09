@@ -160,7 +160,7 @@ mount sysfs-live -t sysfs "$mountpoint/sys"
 mount securityfs -t securityfs "$mountpoint/sys/kernel/security"
 
 # u-boot-update 
-chroot ${mount_point}/writable/ /bin/bash -c "u-boot-update"
+chroot ${mount_point}/writable/ /bin/bash -c "u-boot-update&&sync"
 
 sync --file-system
 sync
