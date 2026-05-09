@@ -25,4 +25,4 @@ EOF
 	apt-get -y purge cloud-init flash-kernel fwupd ufw grub-efi-arm64
 	apt-get -y autoremove
 	apt-get  clean
-	
+	sync
