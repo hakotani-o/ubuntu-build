@@ -68,6 +68,10 @@ jobs:
             ベースカーネル: ${{ steps.kernel.outputs.kernel_version }}
           draft: false
           prerelease: false
+          # 【重要】既存のリリースがある場合にファイルを追記・更新できるようにする
+          allow_updates: true
+          # 【重要】2つのジョブが同時に書き込んでもエラーにならないようにする
+          make_latest: true
           files: ./Ubuntu-*img.xz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
