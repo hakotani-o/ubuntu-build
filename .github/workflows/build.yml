@@ -32,7 +32,7 @@ jobs:
       - name: Get kernel file name
         id: kernel
         run: |
-             echo "kaernel_name=`ls *.deb`" >> $GITHUB_OUTPUT
+             echo "kaernel_name=`ls -1 *.deb| tr '\n' ' '`" >> $GITHUB_OUTPUT
 
       - name: Upload rootfs artifact
         uses: actions/upload-artifact@v4
