@@ -1,4 +1,4 @@
-name: v1-ubuntu-image-combined-kernel
+name: v1-ubuntu-image-kernel
 
 on:
   workflow_dispatch:
