@@ -97,7 +97,7 @@ jobs:
           if [ -f sd-card.txt ]; then mv sd-card.txt final_assets/sd-card-${{ matrix.model }}.txt; fi
 
 
-release:
+  release:
     needs: build
     runs-on: ubuntu-latest
     permissions:
