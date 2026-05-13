@@ -29,10 +29,10 @@ jobs:
           sudo ./ubuntu-image.sh
           # ここで rootfs.tar.xz などができる想定
 
-      - name: Upload rootfs artifact kernel_version
+      - name: Upload rootfs artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ubuntu.rootfs.tar *.deb
+          name: ubuntu.rootfs.tar *.deb kernel_version
           path: . # 作成されたファイルのパスを指定
 
 
