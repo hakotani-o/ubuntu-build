@@ -29,10 +29,19 @@ jobs:
           sudo ./ubuntu-image.sh
           # ここで rootfs.tar.xz などができる想定
 
+      - name: Get kernel version
+        id: kernel
+        run: |
+          if [ -f kernel_version ]; then
+            cat kernel_version >> $GITHUB_OUTPUT
+          else
+            echo "kernel_version=unknown" >> $GITHUB_OUTPUT
+          fi
+
       - name: Upload rootfs artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ubuntu.rootfs.tar *.deb kernel_version
+          name: ubuntu.rootfs.tar ${{ steps.kernel.outputs.kernel_version }} kernel_version
           path: . # 作成されたファイルのパスを指定
 
 
