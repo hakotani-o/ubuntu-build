@@ -10,7 +10,7 @@ permissions:
   contents: write  # これがリリース作成に必要
 
 jobs:
- build_rootfs:
+  build_rootfs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
