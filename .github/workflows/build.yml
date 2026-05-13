@@ -1,0 +1,133 @@
+name: v1-ubuntu-image-combined-with-kernel
+
+on:
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+permissions:
+  contents: write  # これがリリース作成に必要
+
+jobs:
+ build_rootfs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: kernel
+        run: /bin/bash ./build-kernel.sh arm64 2>&1|tee log1
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qemu-user-static debootstrap # 必要なものを列>挙
+
+      - name: Build rootfs tarball
+        run: |
+          chmod +x ubuntu-image.sh
+          sudo ./ubuntu-image.sh
+          # ここで rootfs.tar.xz などができる想定
+
+      - name: Upload rootfs artifact kernel_version
+        uses: actions/upload-artifact@v4
+        with:
+          name: ubuntu.rootfs.tar *.deb
+          path: . # 作成されたファイルのパスを指定
+
+
+  build:
+    needs: build_rootfs # rootfsが終わるまで待つ
+    name: Build for ${{ matrix.model }}
+    runs-on: ubuntu-24.04-arm
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - model: orangepi-5
+            defconfig: orangepi-5-rk3588s_defconfig
+            dtb: rk3588s-orangepi-5
+          - model: orangepi-5-plus
+            defconfig: orangepi-5-plus-rk3588_defconfig
+            dtb: rk3588-orangepi-5-plus
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: u-boot
+        # matrix から defconfig と suffix を取得して実行
+        run: /bin/bash ./das-u-boot.sh ${{ matrix.defconfig }}
+
+      - name: Download rootfs artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ubuntu.rootfs.tar *.deb kernel_version
+          path: ./
+
+      - name: Get kernel version
+        id: kernel
+        run: |
+          if [ -f kernel_version ]; then
+            cat kernel_version >> $GITHUB_OUTPUT
+          else
+            echo "kernel_version=unknown" >> $GITHUB_OUTPUT
+          fi
+
+      - name: disk image
+        run: |
+            chmod +x disk_image.sh
+            sudo ./disk_image.sh arm64 ${{ matrix.model }} ${{ matrix.dtb }}
+            echo "============================"
+            ls -l
+            echo "============================="
+
+      - name: Get current date
+        id: date
+        run: echo "now=$(date +'%Y-%m-%d %H:%M')" >> $GITHUB_OUTPUT
+
+      - name: Rename files to avoid conflict
+        run: |
+          # リリース時に混ざらないよう、成果物を1つのフォルダに集めます
+          mkdir final_assets
+          # .imgファイルを移動（もし拡張子が違う場合は適宜修正してください）
+          mv *.img* final_assets/ || true
+          # リネームしたu-bootなども移動
+          mv u-boot-rockchip.bin final_assets/u-boot-rockchip-${{ matrix.model }}.bin || true
+          if [ -f sd-card.txt ]; then mv sd-card.txt final_assets/sd-card-${{ matrix.model }}.txt; fi
+
+
+release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+          pattern: build-artifacts-*
+          merge-multiple: true
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          # タグ名を固定ではなく、確実に新しいものにする
+          tag_name: v1.0.${{ github.run_number }}
+          name: Release Build ${{ github.run_number }}
+          files: release-assets/**/*
+          draft: false
+          prerelease: false
+          # 権限問題を回避するための設定
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+
+
+#          body: |
+#            Orange Pi 5 / 5 PLUS 自作ディスクイメージ
+#            ビルド日時: ${{ steps.date.outputs.now }}
+#            ベースカーネル: ${{ steps.kernel.outputs.kernel_version }}
