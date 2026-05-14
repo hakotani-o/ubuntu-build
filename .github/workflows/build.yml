@@ -65,27 +65,6 @@ jobs:
           name: ubuntu.rootfs.tar kernel_version
           path: ./
 
-      - name: Get kernel version
-        id: kernel
-        run: |
-          if [ -f kernel_version ]; then
-            cat kernel_version >> $GITHUB_OUTPUT
-          else
-            echo "kernel_version=unknown" >> $GITHUB_OUTPUT
-          fi
-
-      - name: disk image
-        run: |
-            chmod +x disk_image.sh
-            sudo ./disk_image.sh arm64 ${{ matrix.model }} ${{ matrix.dtb }}
-            echo "============================"
-            ls -l
-            echo "============================="
-
-      - name: Get current date
-        id: date
-        run: echo "now=$(date +'%Y-%m-%d %H:%M')" >> $GITHUB_OUTPUT
-
       - name: Rename files to avoid conflict
         run: |
           # リリース時に混ざらないよう、成果物を1つのフォルダに集めます
@@ -95,8 +74,15 @@ jobs:
           # リネームしたu-bootなども移動
           mv u-boot-rockchip.bin final_assets/u-boot-rockchip-${{ matrix.model }}.bin || true
           if [ -f sd-card.txt ]; then mv sd-card.txt final_assets/sd-card-${{ matrix.model }}.txt; fi
+          if [ -f kernel_version ]; then mv kernel_version final_assets/kernel_version-${{ matrix.model }}; fi
 
-
+      # ここで一時保存（これが終わるとこのジョブのデータは消えるので artifact に預ける）
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts-${{ matrix.model }}
+          path: final_assets/
+          retention-days: 1
   release:
     needs: build
     runs-on: ubuntu-24.04-arm
@@ -116,7 +102,7 @@ jobs:
 
       - name: Get kernel version
         id: kernel
-        run: cat kernel_version >> $GITHUB_OUTPUT
+        run: cat kernel_version-${{ matrix.model }} >> $GITHUB_OUTPUT
         
 
       - name: Create Release
