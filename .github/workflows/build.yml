@@ -59,16 +59,16 @@ jobs:
         # matrix から defconfig と suffix を取得して実行
         run: /bin/bash ./das-u-boot.sh ${{ matrix.defconfig }}
 
-      - name: disk image
-        run: |
-          chmod +x disk_image.sh
-          sudo ./disk_image.sh arm64 ${{ matrix.model }} ${{ matrix.dtb }}
-
       - name: Download rootfs artifact
         uses: actions/download-artifact@v4
         with:
           name: ubuntu.rootfs.tar
           path: ./
+
+      - name: disk image
+        run: |
+          chmod +x disk_image.sh
+          sudo ./disk_image.sh arm64 ${{ matrix.model }} ${{ matrix.dtb }}
 
       - name: Rename files to avoid conflict
         run: |
