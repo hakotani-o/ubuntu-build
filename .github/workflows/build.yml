@@ -75,6 +75,8 @@ jobs:
           mv u-boot-rockchip.bin final_assets/u-boot-rockchip-${{ matrix.model }}.bin || true
           if [ -f sd-card.txt ]; then mv sd-card.txt final_assets/sd-card-${{ matrix.model }}.txt; fi
           if [ -f kernel_version ]; then mv kernel_version final_assets/kernel_version-${{ matrix.model }}; fi
+          ls final_assets
+
 
       # ここで一時保存（これが終わるとこのジョブのデータは消えるので artifact に預ける）
       - name: Upload artifact
