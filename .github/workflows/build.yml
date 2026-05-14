@@ -29,15 +29,10 @@ jobs:
           sudo ./ubuntu-image.sh
           # ここで rootfs.tar.xz などができる想定
 
-      - name: Get kernel file name
-        id: kernel
-        run: |
-             echo "kaernel_name=`ls -1 *.deb| tr '\n' ' '`" >> $GITHUB_OUTPUT
-
       - name: Upload rootfs artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ubuntu.rootfs.tar ${{ steps.kernel.outputs.kernel_name }} kernel_version
+          name: ubuntu.rootfs.tar kernel_version
           path: . # 作成されたファイルのパスを指定
 
 
@@ -67,7 +62,7 @@ jobs:
       - name: Download rootfs artifact
         uses: actions/download-artifact@v4
         with:
-          name: ubuntu.rootfs.tar *.deb kernel_version
+          name: ubuntu.rootfs.tar kernel_version
           path: ./
 
       - name: Get kernel version
@@ -115,6 +110,15 @@ jobs:
           pattern: build-artifacts-*
           merge-multiple: true
 
+      - name: Get current date
+        id: date
+        run: echo "now=$(date +'%Y-%m-%d %H:%M')" >> $GITHUB_OUTPUT
+
+      - name: Get kernel version
+        id: kernel
+        run: cat kernel_version >> $GITHUB_OUTPUT
+        
+
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
@@ -122,6 +126,10 @@ jobs:
           tag_name: v1.0.${{ github.run_number }}
           name: Release Build ${{ github.run_number }}
           files: release-assets/**/*
+          body: |
+            Orange Pi 5 / 5 PLUS 自作ディスクイメージ
+            ビルド日時: ${{ steps.date.outputs.now }}
+            ベースカーネル: ${{ steps.kernel.outputs.kernel_version }}
           draft: false
           prerelease: false
           # 権限問題を回避するための設定
@@ -132,7 +140,3 @@ jobs:
 
 
 
-#          body: |
-#            Orange Pi 5 / 5 PLUS 自作ディスクイメージ
-#            ビルド日時: ${{ steps.date.outputs.now }}
-#            ベースカーネル: ${{ steps.kernel.outputs.kernel_version }}
