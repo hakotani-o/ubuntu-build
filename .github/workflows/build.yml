@@ -104,7 +104,7 @@ jobs:
 
       - name: Get kernel version
         id: kernel
-        run: cat kernel_version-${{ matrix.model }} >> $GITHUB_OUTPUT
+        run: cat kernel_version-orangepi-5 >> $GITHUB_OUTPUT
         
 
       - name: Create Release
