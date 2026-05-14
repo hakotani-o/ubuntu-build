@@ -44,6 +44,8 @@ customization:
     - name: "ubiquity-slideshow-ubuntu"
     - name: "squashfs-tools"
     - name: "snapd"
+    - name: "apparmor-utils"
+    - name: "apparmor-profiles"
   extra-snaps:
     - name: snapd
     - name: core24
