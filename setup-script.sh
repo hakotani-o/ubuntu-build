@@ -4,7 +4,7 @@ set -x
 	sed -i 's/#EXTRA_GROUPS=.*/EXTRA_GROUPS="video"/g' /etc/adduser.conf
 	sed -i 's/#ADD_EXTRA_GROUPS=.*/ADD_EXTRA_GROUPS=1/g' /etc/adduser.conf
 	echo -n "rootwait rw console=ttyS2,1500000 console=tty1 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory" > /etc/kernel/cmdline
-	echo -n " quiet splash plymouth.ignore-serial-consoles" >> /etc/kernel/cmdline
+	echo -n " quiet splash plymouth.ignore-serial-consoles apparmor=1 security=apparmor" >> /etc/kernel/cmdline
 	# Override u-boot-menu config 
 	mkdir -p /usr/share/u-boot-menu/conf.d
 	cat << 'EOF' > /usr/share/u-boot-menu/conf.d/ubuntu.conf
