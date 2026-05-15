@@ -8,6 +8,9 @@ jobs:
   command:
     name: Use Linux commands
     runs-on: ubuntu-24.04-arm
+    env:
+     FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
