@@ -11,12 +11,14 @@ permissions:
 
 jobs:
   build_rootfs:
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    
     runs-on: ubuntu-24.04-arm
     steps:
+  
       - uses: actions/checkout@v4
-
+        env: 
+         FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+ 
       - name: kernel
         run: /bin/bash ./build-kernel.sh arm64 2>&1|tee log1
 
