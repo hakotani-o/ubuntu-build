@@ -35,6 +35,8 @@ jobs:
 
       - name: Upload rootfs artifact
         uses: actions/upload-artifact@v4
+        env: 
+         FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
         with:
           name: ubuntu.rootfs.tar
           path: . # 作成されたファイルのパスを指定
@@ -42,8 +44,6 @@ jobs:
 
   build:
     needs: build_rootfs # rootfsが終わるまで待つ
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     name: Build for ${{ matrix.model }}
     runs-on: ubuntu-24.04-arm
     strategy:
@@ -60,13 +60,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
+        env: 
+         FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       - name: u-boot
         # matrix から defconfig と suffix を取得して実行
         run: /bin/bash ./das-u-boot.sh ${{ matrix.defconfig }}
 
       - name: Download rootfs artifact
         uses: actions/download-artifact@v4
+        env: 
+         FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
         with:
           name: ubuntu.rootfs.tar
           path: ./
@@ -90,20 +93,22 @@ jobs:
       # ここで一時保存（これが終わるとこのジョブのデータは消えるので artifact に預ける）
       - name: Upload artifact
         uses: actions/upload-artifact@v4
+        env: 
+         FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
         with:
           name: build-artifacts-${{ matrix.model }}
           path: final_assets/
           retention-days: 1
   release:
     needs: build
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     runs-on: ubuntu-24.04-arm
     permissions:
       contents: write
     steps:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
+        env: 
+         FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
         with:
           path: release-assets
           pattern: build-artifacts-*
