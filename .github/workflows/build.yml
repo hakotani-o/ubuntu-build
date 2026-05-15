@@ -40,6 +40,8 @@ jobs:
 
   build:
     needs: build_rootfs # rootfsが終わるまで待つ
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     name: Build for ${{ matrix.model }}
     runs-on: ubuntu-24.04-arm
     strategy:
