@@ -42,7 +42,7 @@ echo ""
 		fi
 
 	echo 'CONFIG_SYS_SOC="rk3588"' >> configs/$1
-sed -i 's/#ifndef CONFIG_XPL_BUILD/#ifndef CONFIG_XPL_BUILD\n\n# define BOOT_TARGET_DEVICES_SCSI(func)	func(SCSI, scsi, 0, 0, 0) func(SCSI, scsi, 0, 0, 1)\n\n# define BOOT_TARGET_DEVICES_NVME(func)  func(NVME, nvme, 0, 0, 0) func(NVME, nvme, 0, 0, 1)\n\n/' include/configs/rockchip-common.h
+sed -i 's/#ifndef CONFIG_XPL_BUILD/#ifndef CONFIG_XPL_BUILD\n\n #define BOOT_TARGETS    "nvme scsi"\n\n/' include/configs/rockchip-common.h
 
 		make clean $1
 		make -j8
