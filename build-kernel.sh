@@ -27,8 +27,8 @@ if [ $mem_size -gt 8 ]; then
 fi
 
 cd $linux_dir
-# git clone --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git -b linux-7.0.y
-git clone --depth 1 https://github.com/torvalds/linux.git -b v7.1-rc5
+git clone --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git -b linux-7.0.y
+# git clone --depth 1 https://github.com/torvalds/linux.git -b v7.1-rc5
 
 cd linux
 make defconfig
