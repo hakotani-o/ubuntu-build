@@ -56,7 +56,7 @@ teardown_mountpoint() {
 	setup_mountpoint build/chroot
 	 mkdir build/chroot/kernel
 	 cp *.deb build/chroot/kernel
-	  systemctl stop apparmor
+	#systemctl stop apparmor
 	 chroot build/chroot /setup-script.sh
 	teardown_mountpoint build/chroot
 	 rm build/chroot/setup-script.sh
