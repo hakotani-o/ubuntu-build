@@ -15,28 +15,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: u-boot
+      - name: Build u-boot for Orange pi 5
         run: /bin/bash  ./das-u-boot.sh orangepi-5-rk3588s_defconfig
 
-      - name: kernel
+      - name: Build kernel
         run: /bin/bash ./build-kernel.sh arm64 2>&1|tee log1
         
-      - name: rootfs
+      - name: Build rootfs
         run: |
             ls
             chmod +x ubuntu-image.sh
             sudo  ./ubuntu-image.sh
 
-      - name: disk image
+      - name: Build disk image fot Orange pi 5
         run:  |
             chmod +x disk_image.sh
             sudo  ./disk_image.sh arm64 orangepi-5 rk3588s-orangepi-5
             mv u-boot-rockchip.bin orangepi-5-u-boot-rockchip.bin
 
-      - name: Build u-boot for orangepi-5-PLUS
+      - name: Build u-boot for Orangepi-5-PLUS
         run: /bin/bash  ./das-u-boot.sh orangepi-5-plus-rk3588_defconfig
 
-      - name: Build disk image for orangepi-5-PLUS
+      - name: Build disk image for Orangepi-5-PLUS
         run:  |
             sudo  ./disk_image.sh arm64 orangepi-5-plus rk3588-orangepi-5-plus
             mv u-boot-rockchip.bin orangepi-5-PLUS-u-boot-rockchip.bin
