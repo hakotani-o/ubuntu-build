@@ -6,10 +6,10 @@ export LANG=C
 
 	 rm -rf build && mkdir build
 
-	#mem_size=`free --giga|grep Mem|awk '{print $2}'`
-	#if [ $mem_size -gt 15 ]; then
-	#	 mount -t tmpfs -o size=13G tmpfs build
-	#fi
+	mem_size=`free --giga|grep Mem|awk '{print $2}'`
+	if [ $mem_size -gt 15 ]; then
+		 mount -t tmpfs -o size=13G tmpfs build
+	fi
 
 	 snap install --classic ubuntu-image
 #	 snap install --channel=latest/edge --classic ubuntu-image
@@ -68,8 +68,8 @@ teardown_mountpoint() {
 
 	cd build/chroot &&  tar -cf ../../$rootfs --xattrs ./*
 	cd ../..
-	#if [ $mem_size -gt 15 ]; then
-	#	umount build
-	#	sleep 2
-	#fi  
+	if [ $mem_size -gt 15 ]; then
+		umount build
+		sleep 2
+	fi  
 	exit 0
