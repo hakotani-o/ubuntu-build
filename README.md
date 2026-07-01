@@ -3,7 +3,7 @@
 自分好みにカスタマイズした、最新メインラインカーネル採用の Ubuntu イメージです。
 
 ## 特徴 (Features)
-- **Kernel**: 自作カスタムカーネル (v7.0.x-rockchip)
+- **Kernel**: 自作カスタムカーネル (v7.1.x-rockchip)
   - `CONFIG_EXPERT=n` で安定性を確保
   - Rockchip RK3588 / RK3588S に最適化
   - 個人の使用環境に特化した最適化設定
