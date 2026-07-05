@@ -17,7 +17,7 @@ EOF
 	rm -f /var/lib/dbus/machine-id
 	true > /etc/machine-id
 	touch /var/log/syslog
-	chown syslog:adm /var/log/syslog
+	chown root:adm /var/log/syslog
 	ssh-keygen -A
 
 	dpkg -i kernel/*
