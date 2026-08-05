@@ -18,7 +18,8 @@ rootfs:
   pocket: updates
   seed:
     urls:
-      - "https://git.launchpad.net/~ubuntu-core-dev/ubuntu-seeds/+git/"
+#      - "https://git.launchpad.net/~ubuntu-core-dev/ubuntu-seeds/+git/"
+      - "https://git.launchpad.net/~ubuntu-core-dev/ubuntu-seeds/+git/ubuntu.resolute"
     branch: resolute
     names:
 #      - cloud-image
