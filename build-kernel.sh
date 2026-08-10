@@ -57,10 +57,11 @@ do
         patch -p1 < $i
 done
 
+wget https://raw.githubusercontent.com/archlinuxarm/PKGBUILDs/refs/heads/master/core/linux-aarch64/config
+sed -i  '/^CONFIG_INITRAMFS_SOURCE/d' config
+#make defconfig
 
-make defconfig
-
-./scripts/kconfig/merge_config.sh -m .config ../../my-add.txt
+./scripts/kconfig/merge_config.sh -m config ../../my-add.txt
 
 ./scripts/config --set-val DEBUG_INFO_NONE y
 ./scripts/config --disable DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT
@@ -68,6 +69,7 @@ make defconfig
 ./scripts/config --disable DEBUG_INFO_DWARF5
 
 make olddefconfig
+ sed -i 's/CONFIG_LOCALVERSION="-ARCH"/CONFIG_LOCALVERSION=""/' .config
 
 fakeroot make -j$(nproc) LOCALVERSION="-rockchip" deb-pkg
 tmp_var=$(make LOCALVERSION="-rockchip" -s kernelrelease)
