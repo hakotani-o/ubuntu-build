@@ -1,12 +1,13 @@
 # Ubuntu 26.04 Custom for Orange Pi 5 / 5 Plus
 
-自分好みにカスタマイズした、最新メインラインカーネル採用の Ubuntu イメージです。
+最新メインラインカーネル採用の Ubuntu イメージです。
 
 ## 特徴 (Features)
-- **Kernel**: 自作カスタムカーネル (v7.1.x-rockchip)
-  - `CONFIG_EXPERT=n` で安定性を確保
+- **Kernel**: ROCKCHIPカスタムカーネル (v7.1.x-rockchip)
+  - `arch linux aarch64` のconfigをベースにし安定性を確保
   - Rockchip RK3588 / RK3588S に最適化
-  - 個人の使用環境に特化した最適化設定
+  - `VP9 Hardware Decoding Support`
+    **Special thanks to the original authors and the minimyth2 project for creating and publishing these essential patches!**
 - **OS**: Ubuntu 26.04 (Resolute)
 - **軽量化**: 
   - 初期イメージサイズを 2GB 以下に抑えるため、**Snap アプリケーションをプリインストールしていません**。
@@ -17,15 +18,8 @@
 2. SSD または microSD カードに書き込みます。
 
 ### 初期セットアップ (Initial Setup)
-モデルによって起動時の挙動が異なります：
-
-- **Orange Pi 5**: 
-  初回起動時に GUI のセットアップ（oem-config）が開始されます。画面の指示に従ってユーザーを作成してください。
-- **Orange Pi 5 Plus**: 
-  セットアップウィザードが表示されない場合があります。その場合は以下でログインしてください。
-  - **User**: `ubuntu` / **Pass**: `ubuntu`
-  - ログイン後、すぐにパスワードの再設定が求められます。
-
+ - 初回起動時に GUI のセットアップ（oem-config）が開始されます。画面の指示に従ってユーザーを作成してください。
+  
 ### 推奨設定 (Recommended Commands)
 デスクトップ環境を完全な状態にしたり、ブラウザを追加したりするには以下のコマンドを実行してください。
 
