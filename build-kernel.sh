@@ -27,9 +27,9 @@ if [ $mem_size -gt 8 ]; then
 fi
 
 cd $linux_dir
-git clone --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git -b linux-7.1.y
+#git clone --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git -b linux-7.1.y
 #git clone --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git -b v7.0.10
-# git clone --depth 1 https://github.com/torvalds/linux.git -b v7.1-rc5
+ git clone --depth 1 https://github.com/torvalds/linux.git -b v7.2-rc7
 
 mkdir minimyth2 && cd minimyth2
 # 3559-media-rkvdec-fix-PM-runtime-teardown-ordering-in-remove.patch
