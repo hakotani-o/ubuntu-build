@@ -70,7 +70,8 @@ sed -i  '/^CONFIG_INITRAMFS_SOURCE/d' config
 
 make olddefconfig
  sed -i 's/CONFIG_LOCALVERSION="-ARCH"/CONFIG_LOCALVERSION=""/' .config
-
+ 
+export KCFLAGS="-march=armv8-a+crypto+crc -mtune=cortex-a76.cortex-a55"
 fakeroot make -j$(nproc) LOCALVERSION="-rockchip" deb-pkg
 tmp_var=$(make LOCALVERSION="-rockchip" -s kernelrelease)
 echo "tmp_var=$tmp_var" > ../../tmp_var.txt
