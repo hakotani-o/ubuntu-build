@@ -46,6 +46,21 @@ wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script
 wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script/kernel/linux-7.1/files/3573-media-rkvdec-vdpu381-vp9-use-the-real-buffer-stride.patch
 # 3574-media-rkvdec-Add-support-for-the-VDPU346-variant.patch
 wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script/kernel/linux-7.1/files/3574-media-rkvdec-Add-support-for-the-VDPU346-variant.patch
+
+# add 4 patch for AV01 4K Hardware decode not work 2026/08/18
+
+# 3611-arm64-dtsi-rk3588-add-av1-iommu-nodes.patch
+wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script/kernel/linux-7.1/files/3611-arm64-dtsi-rk3588-add-av1-iommu-nodes.patch
+
+# 3563-iommu-Add-verisilicon-IOMMU-driver.patch
+wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script/kernel/linux-7.1/files/3563-iommu-Add-verisilicon-IOMMU-driver.patch
+
+# 3566-media-v4l2-core-Initialize-h264-frame_mbs_only_flag-as-1.patch
+wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script/kernel/linux-7.1/files/3566-media-v4l2-core-Initialize-h264-frame_mbs_only_flag-as-1.patch
+
+# 3567-media-verisilicon-AV1-Restore-IOMMU-context-before-d.patch
+wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script/kernel/linux-7.1/files/3567-media-verisilicon-AV1-Restore-IOMMU-context-before-d.patch
+
 cd ..
 
 cd linux
