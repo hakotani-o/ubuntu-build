@@ -186,6 +186,7 @@ CONFIG_DMABUF_HEAPS_CMA=y       # 同上
 CONFIG_DMA_SHARED_BUFFER=y      # 同上の基盤
 CONFIG_MEDIA_CONTROLLER=y       # V4L2 メディアコントローラー
 CONFIG_VIDEO_V4L2_SUBDEV_API=y  # V4L2 サブデバイス API
+CONFIG_VSI_IOMMU=y              # fot AV01 4K decode
 
 # ====================================================================
 # 🎛️ ZRAM（メモリ圧縮機能）の有効化
