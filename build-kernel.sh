@@ -65,7 +65,7 @@ wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script
 
 # 3567-media-verisilicon-AV1-Restore-IOMMU-context-before-d.patch
 wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script/kernel/linux-7.1/files/3567-media-verisilicon-AV1-Restore-IOMMU-context-before-d.patch
-
+cp ../../3563-remake.patch .
 cd ..
 
 cd linux
@@ -78,8 +78,7 @@ do
 done
 
 wget https://raw.githubusercontent.com/archlinuxarm/PKGBUILDs/refs/heads/master/core/linux-aarch64/config
-cp ../../vsi-iommu.c drivers/iommu
-cp ../../linux-vsi-iommu.h include/linux/vsi-iommu.h
+
 #make defconfig
 
 ./scripts/kconfig/merge_config.sh -m config ../../my-add.txt
