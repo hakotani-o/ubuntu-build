@@ -266,3 +266,28 @@ index 42c424496..304c98a9c 100644
  		spin_unlock_irqrestore(&vsi_domain->lock, flags);
  	}
  
+diff --speed-large-files --no-dereference --minimal -Naur linux-7.0-rc1/include/linux/vsi-iommu.h linux-7.0-rc1/include/linux/vsi-iommu.h
+--- linux-7.0-rc1/include/linux/vsi-iommu.h	1970-01-01 01:00:00.000000000 +0100
+++ linux-7.0-rc1/include/linux/vsi-iommu.h	2026-03-02 12:41:56.770149059 +0100
+@@ -0,0 +1,21 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/*
++ * verisilicon iommu: simple virtual address space management
++ *
++ * Copyright (c) 2025, Collabora
++ *
++ * Written by Benjamin Gaignard <benjamin.gaignard@collabora.com>
++ */
++
++#ifndef _VSI_IOMMU_H_
++#define _VSI_IOMMU_H_
++
++struct iommu_domain;
++
++#if IS_ENABLED(CONFIG_VSI_IOMMU)
++void vsi_iommu_restore_ctx(struct iommu_domain *domain);
++#else
++static inline void vsi_iommu_restore_ctx(struct iommu_domain *domain) {}
++#endif
++
++#endif
