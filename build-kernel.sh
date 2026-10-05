@@ -71,7 +71,8 @@ wget https://raw.githubusercontent.com/archlinuxarm/PKGBUILDs/refs/heads/master/
 make olddefconfig
  sed -i 's/CONFIG_LOCALVERSION="-ARCH"/CONFIG_LOCALVERSION=""/' .config
  
-export KCFLAGS="-march=armv8-a+crypto+crc -mtune=cortex-a76.cortex-a55"
+#export KCFLAGS="-march=armv8-a+crypto+crc -mtune=cortex-a76.cortex-a55"
+export KCFLAGS="-mcpu=cortex-a76.cortex-a55+crypto+dotprod+nosve -fno-plt
 fakeroot make -j$(nproc) LOCALVERSION="-rockchip" deb-pkg
 tmp_var=$(make LOCALVERSION="-rockchip" -s kernelrelease)
 echo "tmp_var=$tmp_var" > ../../tmp_var.txt
