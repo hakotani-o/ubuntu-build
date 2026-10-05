@@ -70,6 +70,8 @@ jobs:
           tag_name: build-${{ github.run_number }}
           name: "Orange Pi 5 / 5 PLUS Disk Image Build ${{ github.run_number }}"
           body: |
+            KCFLAGS="-mcpu=cortex-a76.cortex-a55+crypto+dotprod+nosve -fno-plt
+            
             Orange Pi 5 / 5 PLUS  自作ディスクイメージ
             ビルド日時: ${{ steps.date.outputs.now }}
             ベースカーネル: ${{ steps.kernel.outputs.kernel_version }}
