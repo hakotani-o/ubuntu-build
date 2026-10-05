@@ -73,8 +73,11 @@ jobs:
             Orange Pi 5 / 5 PLUS  自作ディスクイメージ
             ビルド日時: ${{ steps.date.outputs.now }}
             ベースカーネル: ${{ steps.kernel.outputs.kernel_version }}
-
-            KCFLAGS="-mcpu=cortex-a76.cortex-a55+crypto+dotprod+nosve -fno-plt
+                        
+            ### 1. Disabled Dynamic Preemption (CONFIG_PREEMPT_DYNAMIC=n)
+          
+            ### 2. Optimized CPU/Architecture Compilation Flags (KCFLAGS)
+            ## KCFLAGS: "-mcpu=cortex-a76.cortex-a55+crypto+dotprod+nosve -fno-plt"
 
           draft: false
           prerelease: false
