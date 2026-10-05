@@ -69,12 +69,13 @@ jobs:
           # 実行するたびにユニークなタグ名（例: build-1, build-2...）を付けます
           tag_name: build-${{ github.run_number }}
           name: "Orange Pi 5 / 5 PLUS Disk Image Build ${{ github.run_number }}"
-          body: |
-            KCFLAGS="-mcpu=cortex-a76.cortex-a55+crypto+dotprod+nosve -fno-plt
-            
+          body: |            
             Orange Pi 5 / 5 PLUS  自作ディスクイメージ
             ビルド日時: ${{ steps.date.outputs.now }}
             ベースカーネル: ${{ steps.kernel.outputs.kernel_version }}
+
+            KCFLAGS="-mcpu=cortex-a76.cortex-a55+crypto+dotprod+nosve -fno-plt
+
           draft: false
           prerelease: false
           # ここに圧縮済みファイルのパスを指定します
