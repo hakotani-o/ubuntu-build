@@ -226,6 +226,17 @@ CONFIG_RTW89_8852BE=m
 # CONFIG_RTW89_8852BU=m
 
 # -------------------------------------------------------------
+# Request from redha 2026-10-08
+# -------------------------------------------------------------
+CONFIG_PERSISTENT_KEYRINGS=y
+CONFIG_BRCMFMAC=m
+CONFIG_BRCMFMAC_PROTO_BCDC=y
+CONFIG_BRCMFMAC_PROTO_MSGBUF=y
+CONFIG_BRCMFMAC_SDIO=y
+CONFIG_BRCMFMAC_USB=y
+CONFIG_BRCMFMAC_PCIE=y
+
+# -------------------------------------------------------------
 # 不足分追加 KOKOKARA
 # -------------------------------------------------------------
 CONFIG_PERSISTENT_KEYRINGS=y
