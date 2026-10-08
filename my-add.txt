@@ -228,7 +228,6 @@ CONFIG_RTW89_8852BE=m
 # -------------------------------------------------------------
 # Request from redha 2026-10-08
 # -------------------------------------------------------------
-CONFIG_PERSISTENT_KEYRINGS=y
 CONFIG_BRCMFMAC=m
 CONFIG_BRCMFMAC_PROTO_BCDC=y
 CONFIG_BRCMFMAC_PROTO_MSGBUF=y
