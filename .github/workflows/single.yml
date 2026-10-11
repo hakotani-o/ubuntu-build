@@ -74,6 +74,11 @@ jobs:
             ビルド日時: ${{ steps.date.outputs.now }}
             ベースカーネル: ${{ steps.kernel.outputs.kernel_version }}
 
+　　　　　 　　### das-u-boot.sh    update    2026-10-11
+            ##### fix(build): fix pylibfdt build error with modern Python3/SWIG environments
+            ##### - Replace legacy Python 2 APIs (PyString/PyInt) in libfdt.i_shipped with Python 3 versions
+            ##### - Remove pre-generated libfdt_wrap.c to force regeneration
+
             ### Add CONFIG_BRCMFMAC        2026-10-08
                         
             ### 1. Disabled Dynamic Preemption (CONFIG_PREEMPT_DYNAMIC=n)
