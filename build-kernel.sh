@@ -27,24 +27,24 @@ if [ $mem_size -gt 8 ]; then
 fi
 
 cd $linux_dir
-git clone --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git -b linux-7.2.y
-#git clone --depth 1 https://github.com/torvalds/linux.git -b v7.2
+git clone --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git -b linux-7.3.y
+#git clone --depth 1 https://github.com/torvalds/linux.git -b v7.3
 
 mkdir minimyth2 && cd minimyth2
 # 3559-media-rkvdec-fix-PM-runtime-teardown-ordering-in-remove.patch
-wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script/kernel/linux-7.2/files/3559-media-rkvdec-fix-PM-runtime-teardown-ordering-in-remove.patch
+wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script/kernel/linux-7.3/files/3559-media-rkvdec-fix-PM-runtime-teardown-ordering-in-remove.patch
 # 3569-media-rkvdec-prime-VDPU383-deblock-warmup-rk3576.patch
-wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script/kernel/linux-7.2/files/3569-media-rkvdec-prime-VDPU383-deblock-warmup-rk3576.patch
+wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script/kernel/linux-7.3/files/3569-media-rkvdec-prime-VDPU383-deblock-warmup-rk3576.patch
 # 3570-media-rkvdec-add-VP9-VDPU381-decoder-support.patch
-wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script/kernel/linux-7.2/files/3570-media-rkvdec-add-VP9-VDPU381-decoder-support.patch
+wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script/kernel/linux-7.3/files/3570-media-rkvdec-add-VP9-VDPU381-decoder-support.patch
 # 3571-media-rkvdec-vp9-fix-altref-vscale-and-segmap-size-for-2K-decode.patch
-wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script/kernel/linux-7.2/files/3571-media-rkvdec-vp9-fix-altref-vscale-and-segmap-size-for-2K-decode.patch
+wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script/kernel/linux-7.3/files/3571-media-rkvdec-vp9-fix-altref-vscale-and-segmap-size-for-2K-decode.patch
 # 3572-media-rkvdec-vdpu381-add-VP9-profile-2-10bit-support.patch
-wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script/kernel/linux-7.2/files/3572-media-rkvdec-vdpu381-add-VP9-profile-2-10bit-support.patch
+wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script/kernel/linux-7.3/files/3572-media-rkvdec-vdpu381-add-VP9-profile-2-10bit-support.patch
 # 3573-media-rkvdec-vdpu381-vp9-use-the-real-buffer-stride.patch
-wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script/kernel/linux-7.2/files/3573-media-rkvdec-vdpu381-vp9-use-the-real-buffer-stride.patch
+wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script/kernel/linux-7.3/files/3573-media-rkvdec-vdpu381-vp9-use-the-real-buffer-stride.patch
 # 3574-media-rkvdec-Add-support-for-the-VDPU346-variant.patch
-wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script/kernel/linux-7.2/files/3574-media-rkvdec-Add-support-for-the-VDPU346-variant.patch
+wget https://raw.githubusercontent.com/warpme/minimyth2/refs/heads/master/script/kernel/linux-7.3/files/3574-media-rkvdec-Add-support-for-the-VDPU346-variant.patch
 
 cd ..
 
