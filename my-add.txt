@@ -297,6 +297,33 @@ CONFIG_NLS_UCS2_UTILS=m
 # -------------------------------------------------------------
 # 不要分削除  KOKOKARA
 # -------------------------------------------------------------
+# config I want to try a new PART 3 2026 11 03 -----------------
+CONFIG_DEBUG_PREEMPT=n
+
+# iotop コマンドなど、プロセスごとの詳細なI/O使用量をリアルタイム表示するツールが一部機能しなくなります。
+CONFIG_SCHEDSTATS=n
+
+CONFIG_TASKSTATS=n
+CONFIG_TASK_DELAY_ACCT=n
+CONFIG_TASK_XACCT=n
+CONFIG_TASK_IO_ACCOUNTING=n
+
+# システム全体の負荷を調べるのに必要かもしれない
+CONFIG_PSI=n
+
+CONFIG_BSD_PROCESS_ACCT=n
+CONFIG_BSD_PROCESS_ACCT_V3=n
+CONFIG_IRQ_TIME_ACCOUNTING=n
+CONFIG_STACKTRACE=n
+CONFIG_LOCK_DEBUGGING_SUPPORT=n
+CONFIG_SCHED_INFO=n
+CONFIG_DEBUG_VM=n
+CONFIG_DEBUG_VM_PGTABLE=n
+CONFIG_DEBUG_VM_IRQSOFF=n
+CONFIG_SLUB_DEBUG=n
+CONFIG_KGDB=n
+
+# config I want to try a new PART 3 -----------------
 
 CONFIG_BCACHE=n
 CONFIG_KASAN=n
