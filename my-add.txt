@@ -43,6 +43,20 @@ CONFIG_HIBERNATION=n
 CONFIG_HIBERNATION_SNAPSHOT_DEV=n
 CONFIG_COMPAT=n
 
+# モジュール圧縮（zstd推奨）
+CONFIG_MODULE_COMPRESS=y
+CONFIG_MODULE_COMPRESS_ZSTD=y
+CONFIG_MODULE_COMPRESS_XZ=n
+CONFIG_MODULE_COMPRESS_ALL=y
+CONFIG_MODULE_DECOMPRESS=y
+
+# インストールイメージ圧縮
+CONFIG_COMPRESSED_INSTALL=y
+
+CONFIG_FW_LOADER=y
+CONFIG_FW_LOADER_COMPRESS=y
+CONFIG_FW_LOADER_COMPRESS_ZSTD=y
+
 #
 # Platform selection
 #
@@ -123,12 +137,29 @@ CONFIG_TMPFS_XATTR=y
 CONFIG_XFS_FS=n
 CONFIG_F2FS_FS=n
 CONFIG_MINIX_FS=n
-
+# Ubuntu
+# SquashFS（snap等で使用）
+CONFIG_SQUASHFS_XATTR=y
+CONFIG_SQUASHFS_LZ4=y
+CONFIG_SQUASHFS_LZO=y
+CONFIG_SQUASHFS_XZ=y
+CONFIG_SQUASHFS_ZSTD=y
+CONFIG_SQUASHFS_4K_DEVBLK_SIZE=y
+CONFIG_SQUASHFS_EMBEDDED=y
 # ====================================================================
 # 🛠️ 開発・デバッグ用（config自動抽出用）
 # ====================================================================
 CONFIG_IKCONFIG=y
 CONFIG_IKCONFIG_PROC=y
+
+
+# -------------------------------------------------------------
+# [10] セキュリティ（snap / AppArmor）
+# -------------------------------------------------------------
+CONFIG_SECURITY=y
+CONFIG_SECURITY_APPARMOR=y
+CONFIG_DEFAULT_SECURITY_APPARMOR=y
+CONFIG_AUDIT=y
 
 
 # -------------------------------------------------------------
