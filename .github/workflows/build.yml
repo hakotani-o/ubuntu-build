@@ -1,0 +1,123 @@
+name: v1-ubuntu-image-kernel
+
+on:
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+permissions:
+  contents: write  # これがリリース作成に必要
+
+jobs:
+  build_rootfs:
+    
+    runs-on: ubuntu-24.04-arm
+    steps:
+  
+      - uses: actions/checkout@v4
+ 
+      - name: kernel
+        run: /bin/bash ./build-kernel.sh arm64 2>&1|tee log1
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qemu-user-static debootstrap # 必要なものを列>挙
+
+      - name: Build rootfs tarball
+        run: |
+          chmod +x ubuntu-image.sh
+          sudo ./ubuntu-image.sh
+          # ここで rootfs.tar.xz などができる想定
+
+      - name: Upload rootfs artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ubuntu.rootfs.tar
+          path: . # 作成されたファイルのパスを指定
+
+
+  build:
+    needs: build_rootfs # rootfsが終わるまで待つ
+    name: Build for ${{ matrix.model }}
+    runs-on: ubuntu-24.04-arm
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - model: orangepi-5
+            defconfig: orangepi-5-rk3588s_defconfig
+            dtb: rk3588s-orangepi-5
+          - model: orangepi-5-plus
+            defconfig: orangepi-5-plus-rk3588_defconfig
+            dtb: rk3588-orangepi-5-plus
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: u-boot
+        # matrix から defconfig と suffix を取得して実行
+        run: /bin/bash ./das-u-boot.sh ${{ matrix.defconfig }}
+
+      - name: Download rootfs artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ubuntu.rootfs.tar
+          path: ./
+
+      - name: disk image
+        run: |
+          chmod +x disk_image.sh
+          sudo ./disk_image.sh arm64 ${{ matrix.model }} ${{ matrix.dtb }}
+
+      - name: Rename files to avoid conflict
+        run: |
+          # リリース時に混ざらないよう、成果物を1つのフォルダに集めます
+          mkdir final_assets
+          # .imgファイルを移動（もし拡張子が違う場合は適宜修正してください）
+          mv *.img* final_assets/ || true
+          # リネームしたu-bootなども移動
+          mv u-boot-rockchip.bin final_assets/u-boot-rockchip-${{ matrix.model }}.bin || true
+          if [ -f sd-card.txt ]; then mv sd-card.txt final_assets/sd-card-${{ matrix.model }}.txt; fi
+
+
+      # ここで一時保存（これが終わるとこのジョブのデータは消えるので artifact に預ける）
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts-${{ matrix.model }}
+          path: final_assets/
+          retention-days: 1
+  release:
+    needs: build
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: write
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        env: 
+         FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+        with:
+          path: release-assets
+          pattern: build-artifacts-*
+          merge-multiple: true
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          # タグ名を固定ではなく、確実に新しいものにする
+          tag_name: v1.0.${{ github.run_number }}
+          name: Release Build ${{ github.run_number }}
+          files: release-assets/**/*
+          draft: false
+          prerelease: false
+          # 権限問題を回避するための設定
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+
+

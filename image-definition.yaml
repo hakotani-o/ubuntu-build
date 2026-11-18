@@ -1,0 +1,63 @@
+---
+name: ubuntu-rootfs
+display-name: Ubuntu rootfs ARM64
+revision: 2
+architecture: arm64
+series: resolute
+class: preinstalled
+#kernel: linux-generic
+rootfs:
+  archive: ubuntu
+  sources-list-deb822: true
+  components:
+    - main
+    - restricted
+    - universe
+    - multiverse
+  mirror: "http://ports.ubuntu.com/ubuntu-ports/"
+  pocket: updates
+  seed:
+    urls:
+      - "https://git.launchpad.net/~ubuntu-core-dev/ubuntu-seeds/+git/"
+#      - "https://git.launchpad.net/~ubuntu-core-dev/ubuntu-seeds/+git/ubuntu.resolute"
+    branch: resolute
+    names:
+#      - cloud-image
+#      - server
+      - minimal
+#      - standard
+customization:
+  extra-packages:
+    - name: "u-boot-tools"
+    - name: "u-boot-menu"
+#    - name: "grub-efi-arm64"
+    - name: "ubuntu-desktop-minimal"
+    - name: "linux-firmware"
+    - name: "cloud-initramfs-growroot"
+    - name: "oem-config-gtk"
+    - name: "ubiquity-frontend-gtk"
+    - name: "yaru-theme-unity"
+    - name: "aptdaemon"
+    - name: "initramfs-tools"
+    - name: "localechooser-data"
+    - name: "oem-config"
+    - name: "oem-config-debconf"
+    - name: "ubiquity-slideshow-ubuntu"
+    - name: "squashfs-tools"
+    - name: "snapd"
+    - name: "apparmor"
+    - name: "apparmor-utils"
+    - name: "apparmor-profiles"
+  extra-snaps:
+    - name: snapd
+    - name: core24
+    - name: mesa-2404
+#    - name: bare
+#    - name: core22
+#    - name: core24
+#    - name: firefox
+#    - name: gnome-46-2404
+#    - name: gtk-common-themes
+#    - name: thunderbird
+artifacts:
+  img:
